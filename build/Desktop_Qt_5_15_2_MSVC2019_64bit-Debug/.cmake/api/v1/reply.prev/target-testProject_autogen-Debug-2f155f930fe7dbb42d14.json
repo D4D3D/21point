@@ -1,0 +1,71 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"testProject/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "testProject_autogen_timestamp_deps::@5cca5b9ba8b7dec50d28"
+		}
+	],
+	"id" : "testProject_autogen::@5cca5b9ba8b7dec50d28",
+	"isGeneratorProvided" : true,
+	"name" : "testProject_autogen",
+	"paths" : 
+	{
+		"build" : "testProject",
+		"source" : "testProject"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/testProject/CMakeFiles/testProject_autogen",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/testProject/CMakeFiles/testProject_autogen.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/testProject/testProject_autogen/timestamp.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

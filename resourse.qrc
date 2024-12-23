@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>D:/desktop/someimage/OIP-C (10).jpg</file>
+        <file>D:/desktop/img/8BitDeck.png</file>
+        <file>D:/desktop/img/cards.png</file>
+        <file>D:/desktop/img/chips.png</file>
+        <file>D:/desktop/img/Enhancers.png</file>
+        <file>D:/desktop/img/thedesktop.png</file>
+        <file>D:/desktop/img/testimage.png</file>
+        <file>D:/desktop/img/E.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,22 @@
+# ninja log v5
+38	329	7566382825194618	testProject/testProject_autogen/timestamp	66626e769151ed5
+45	347	7566434619640588	untitled1_autogen/mocs_compilation.cpp	f15ccb6987db9354
+23	533	7566448582897162	build.ninja	be086b55ff6c92aa
+38	329	7566382825194618	C:/Users/xiao/Documents/untitled1/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/testProject/testProject_autogen/timestamp	66626e769151ed5
+1196	1547	7566408047541036	testProject/testProject.exe	d70cf7767a3e9d4
+45	347	7566434619640588	C:/Users/xiao/Documents/untitled1/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/untitled1_autogen/mocs_compilation.cpp	f15ccb6987db9354
+404	1561	7566433796574608	CMakeFiles/untitled1.dir/main.cpp.obj	6315f4b2f01e2337
+66	1136	7566408044360959	testProject/CMakeFiles/testProject.dir/main.cpp.obj	d42c429074b08921
+38	329	7566382825194618	C:/Users/xiao/Documents/untitled1/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/testProject/testProject_autogen/mocs_compilation.cpp	66626e769151ed5
+45	347	7566434619640588	C:/Users/xiao/Documents/untitled1/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/untitled1_autogen/timestamp	f15ccb6987db9354
+58	1098	7566408043591924	testProject/CMakeFiles/testProject.dir/testProject_autogen/mocs_compilation.cpp.obj	e1850af7dc4bef8f
+76	1196	7566408044881699	testProject/CMakeFiles/testProject.dir/mainwindow.cpp.obj	9324090f27960515
+349	1573	7566434669404925	CMakeFiles/untitled1.dir/widget.cpp.obj	c952764514c1dd05
+316	571	7566408038710193	CMakeFiles/untitled1.dir/untitled1_autogen/EWIEGA46WW/qrc_resourse.cpp.obj	a6b660cbbd6ad8ec
+455	566	7566173985157426	untitled1_autogen/EWIEGA46WW/qrc_resourse.cpp	448c7a2376882a53
+38	329	7566382825194618	testProject/testProject_autogen/mocs_compilation.cpp	66626e769151ed5
+399	1554	7566433796490137	CMakeFiles/untitled1.dir/untitled1_autogen/mocs_compilation.cpp.obj	ba3ed05e0c78dcb7
+45	347	7566434619640588	untitled1_autogen/timestamp	f15ccb6987db9354
+1573	1936	7566434672050123	untitled1.exe	e7c0fadbd5e55c19
+504	1104	7564951235699544	CMakeFiles/untitled1.dir/game.cpp.obj	d772175d3528c427
+455	566	7566173985157426	C:/Users/xiao/Documents/untitled1/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/untitled1_autogen/EWIEGA46WW/qrc_resourse.cpp	448c7a2376882a53
