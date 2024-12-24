@@ -14,6 +14,11 @@
 
 
 
+#include <QUrl>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+
+
 #define max_length 20;
 
 enum color {
@@ -47,11 +52,10 @@ public:
     void Game();
 
     bool onEKeypressed();
-
-    void changeMode();
-    void sendCard();
     void gameContinue();
     void gameOver();
+
+    void playMedie(int time,int num);
 
     //私有变量
 private:
@@ -102,6 +106,13 @@ signals:
     void keyBoardpressE(int key);
 
     void keyBoardpressQ(int key);
+
+    void keyBoardpressR(int key);
+
+    void playmusic(int time,int num);
+
+
+
 
 
 
