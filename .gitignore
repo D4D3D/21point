@@ -3,6 +3,45 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+## extra added
+*.exe
+*.dll
+*.pro.user
+*.pro.user.*
+*.qmlc
+*.jsc
+*.o
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.log
+*.sdf
+*.suo
+*.user
+*.userosscache
+*.ncb
+*.opensdf
+*.tlog
+*.ipch
+*.aps
+*.pch
+*.obj
+*.res
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.lastbuildstate
+*.cmake
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+
 # Ignore Visual Studio project file
 *.vcxproj
 *.vcxproj.filters

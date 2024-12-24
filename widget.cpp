@@ -12,7 +12,7 @@ Widget::Widget(QWidget *parent)
     connect(this,&Widget::keyBoardpressE,this,&Widget::gameContinue);
     connect(this,&Widget::keyBoardpressQ,this,&Widget::gameOver);
     connect(this,&Widget::playmusic,this,&Widget::playMedie);
-    // connect(this,&Widget::,this,%Widget)
+    connect(this,&Widget::cardLimit,this,&Widget::checkCard);
 
     QSize msize  = QSize(900,400);
     this->setFixedSize(msize);
@@ -101,20 +101,26 @@ void Widget::CardMove(){
     mCard.moveBy(5,5);
 }
 
+void Widget::checkCard(){
+
+    if(playercard>4){
+        cardAllow = 1;
+    }
+}
 
 void Widget::playMedie(int time, int num){
 
     if(num == 1){
-        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/gaming.wav"));
+        // player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/gaming.wav"));
     }
     if(num == 2){
         player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/lose.mp3"));
     }
     if(num == 3){
-        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/sendcard.mp3"));
+        // player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/sendcard.mp3"));
     }
     if(num == 4){
-        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/start.wav"));
+        // player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/start.wav"));
     }
     if(num == 5){
         player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/win.mp3"));
@@ -303,11 +309,10 @@ void Widget::Game()
     Shuffle();	//洗牌
     int i, j;
     //为庄家发两张牌
-    for (i = 0; i < 2; i++)
+    for (i = 0; i < 2; i++){
         gamers[0][numcards[0]++] = FirstCard();
 
-    // ShowStatus(0, true);	//显示庄家状态，隐藏首张牌与总分
-    // ShowStatus(0, true);
+    }
     newshowStatus(0,false);
     newshowStatus(0,false);
     //向各玩家发牌并显示
@@ -322,10 +327,14 @@ void Widget::Game()
 
 
 void Widget::gameContinue(){
+    if(cardAllow==0){
     sendcard--;
     gamers[1][numcards[1]++] = FirstCard();
     newshowStatus(1,true);
     emit playmusic(-1,3);
+
+    }
+    emit checkCard();
 }
 
 void Widget::gameOver(){
@@ -336,11 +345,12 @@ void Widget::gameOver(){
     newshowStatus(0,true);
 
     //庄家总分小于等于16，必须再拿牌
-    while (GetTotalScore(gamers[0], numcards[0]) <= 16)
+    if (GetTotalScore(gamers[0], numcards[0]) <= 16)
     {
         QThread::msleep(50);
         gamers[0][numcards[0]++] = FirstCard();	//为庄家发1张牌
         newshowStatus(0,true);
+        emit checkCard();
     }
 
     if (GetTotalScore(gamers[0], numcards[0]) > 21)

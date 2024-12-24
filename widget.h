@@ -57,6 +57,9 @@ public:
 
     void playMedie(int time,int num);
 
+    void checkCard();
+    void restartGame();
+
     //私有变量
 private:
     Ui::Widget *ui;
@@ -81,6 +84,8 @@ private:
     void Shuffle();	//洗牌函数
 
     int GetTotalScore(Card gamer[21], int n);	//返回第一手牌（第一次发牌）的总分值
+
+    int cardAllow = 0 ;//检测玩家牌数是否超过5
 
 
     //这个是新的
@@ -112,6 +117,8 @@ signals:
     void keyBoardpressR(int key);
 
     void playmusic(int time,int num);
+
+    void cardLimit(int num);
 
 
 
