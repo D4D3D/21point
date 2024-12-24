@@ -91,14 +91,6 @@ Widget::~Widget()
     delete ui;
 }
 
-void Widget::changeMode(){
-    mode = 1;
-}
-
-
-void Widget::sendCard(){
-    sendcard++;
-}
 
 
 void Widget::CardMove(){
@@ -115,6 +107,9 @@ void Widget::keyPressEvent(QKeyEvent* event)
     if( keyPressed == Qt::Key_Q)
     {
         emit keyBoardpressQ(keyPressed);
+    }
+    if( keyPressed == Qt::Key_R){
+        emit Key
     }
 
 }
