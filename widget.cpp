@@ -11,12 +11,16 @@ Widget::Widget(QWidget *parent)
 
     connect(this,&Widget::keyBoardpressE,this,&Widget::gameContinue);
     connect(this,&Widget::keyBoardpressQ,this,&Widget::gameOver);
+    connect(this,&Widget::playmusic,this,&Widget::playMedie);
+    // connect(this,&Widget::,this,%Widget)
 
     QSize msize  = QSize(900,400);
     this->setFixedSize(msize);
 
     mGameView.setSceneRect(QRect(0,0,900,400));
     mScene.setSceneRect(QRect(0,0,900,400));
+
+    QMediaPlayer *player = new QMediaPlayer;
 
     mBackground.setPixmap(QPixmap(":/image/D:/desktop/img/thedesktop.png"));
     mScene.addItem(&mBackground);
@@ -91,19 +95,33 @@ Widget::~Widget()
     delete ui;
 }
 
-void Widget::changeMode(){
-    mode = 1;
-}
-
-
-void Widget::sendCard(){
-    sendcard++;
-}
 
 
 void Widget::CardMove(){
     mCard.moveBy(5,5);
 }
+
+
+void Widget::playMedie(int time, int num){
+
+    if(num == 1){
+        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/gaming.wav"));
+    }
+    if(num == 2){
+        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/lose.mp3"));
+    }
+    if(num == 3){
+        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/sendcard.mp3"));
+    }
+    if(num == 4){
+        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/start.wav"));
+    }
+    if(num == 5){
+        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/win.mp3"));
+    }
+
+}
+
 void Widget::keyPressEvent(QKeyEvent* event)
 {
     keyPressed = event->key();
@@ -116,11 +134,11 @@ void Widget::keyPressEvent(QKeyEvent* event)
     {
         emit keyBoardpressQ(keyPressed);
     }
+    if( keyPressed == Qt::Key_R){
+        emit keyBoardpressR(keyPressed);
+    }
 
 }
-// bool Widget::onEKeypressed(){
-//     return true;
-// }
 
 
 
@@ -154,13 +172,6 @@ QPixmap load_card(int num,color s)
     QPixmap* cardK = new QPixmap;
     allCards->load(":/image/D:/desktop/img/cards.png");
     backCards->load(":/image/D:/desktop/img/Enhancers.png");
-    //label1->setScaledContents(true);
-
-    //QScreen* screen = QGuiApplication::primaryScreen();
-
-    //QRect  screenGeometry = screen->geometry();
-    //
-    //QSize size = screen->size()*0.4;
     if(num == -1&&s==other){
         *cardK = backCards->copy(4,4 ,71,95);
     }
@@ -169,32 +180,19 @@ QPixmap load_card(int num,color s)
     {
         *cardK = allCards->copy(posCard(num), (95*0), 71, 95);
 
-        //label1->setPixmap(*cardK);
-        //layout->addWidget(label1);
     }
     else if (s == club)
     {
-
         *cardK = allCards->copy(posCard(num), (95*1), 71, 95);
-        //label1->setPixmap(*cardK);
-        //layout->addWidget(label1);
     }
     else if (s == diamond)
     {
-
         *cardK = allCards->copy(posCard(num), (95*2), 71, 95);
-        //label1->setPixmap(*cardK);
-        //layout->addWidget(label1);
     }
     else if (s == spade)
     {
         *cardK = allCards->copy(posCard(num), (95*3), 71, 95);
-        //label1->setPixmap(*cardK);
-        //layout->addWidget(label1);
     }
-    // cardK->scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    // label1->setPixmap(*cardK);
-
     return *(cardK);
 
 
@@ -243,82 +241,6 @@ int Widget::GetTotalScore(Card gamer[21], int n)
     return totalScore;
 }
 
-/*num为玩家代号
- hide为是否隐藏首张牌
-*/
-
-//发庄家的牌，让其背面向上，发玩家的牌，
-//在每次抽牌后都会重新显示
-//让庄家的牌翻面
-//最后庄家加牌时，再次显示
-//庄家根据0判断，发牌位置根据数字判断，返回一个现在牌库上有几张牌
-// void Widget::ShowStatus(int num, bool hideFirstCard)
-
-// {
-
-//     // cout << endl << name[num] << ":";	//显示庄家或玩家姓名
-
-//     //根据庄家的状态隐藏或显示庄家首张牌的花色
-//     int cardnum;
-//     color s;
-//     int place = 0;
-
-//     // if (hideFirstCard)cout << "<**庄家首张牌被隐藏**>";//隐藏首张牌
-//     // else if (gamers[num][0].shape == clubs) cout << "梅花";
-//     // else if (gamers[num][0].shape == diamonds) cout << "方块";
-//     // else if (gamers[num][0].shape == hearts) cout << "红桃";
-//     // else if (gamers[num][0].shape == spades) cout << "黑桃";
-//     // //输出庄家首张牌的面值
-//     // if (hideFirstCard)  cout << "";
-//     // else if (gamers[num][0].num == A) cout << "A ";	//A表示A
-//     // else if (gamers[num][0].num == J) cout << "J ";
-//     // else if (gamers[num][0].num == Q) cout << "Q ";
-//     // else if (gamers[num][0].num == K) cout << "K ";
-//     // else cout << (int)gamers[num][0].num;
-
-//     if(hideFirstCard) s =other;
-//     else if (gamers[num][0].shape == clubs) s = club;
-//     else if (gamers[num][0].shape == diamonds) s = diamond;
-//     else if (gamers[num][0].shape == hearts) s = heart;
-//     else if (gamers[num][0].shape == spades) s = spade;
-
-//     if(hideFirstCard) cardnum = -1;
-//     else if (gamers[num][0].num == A) cardnum = 11;	//A表示A
-//     else if (gamers[num][0].num == J) cardnum = 12;
-//     else if (gamers[num][0].num == Q) cardnum = 13;
-//     else if (gamers[num][0].num == K) cardnum = 14;
-//     else cardnum =  (int)gamers[num][0].num;
-
-//     placeCard(cardnum,s,(286+(128*place)),10);
-
-
-
-
-
-//     for (int i = 1; i < numcards[num]; i++)
-//     {
-//         if (gamers[num][i].shape == clubs) s = club;
-//         else if (gamers[num][i].shape == diamonds) s = diamond;
-//         else if (gamers[num][i].shape == hearts) s = heart;
-//         else if (gamers[num][i].shape == spades) s = spade;
-
-//         //输出面值
-//         if (gamers[num][i].num == A) cardnum = 11;	//A表示A
-//         else if (gamers[num][i].num == J) cardnum = 12;
-//         else if (gamers[num][i].num == Q) cardnum = 13;
-//         else if (gamers[num][i].num == K) cardnum = 14;
-//         else cardnum =  (int)gamers[num][i].num;
-//         placeCard(cardnum,s,(158+(128*(i-1))),286);
-
-//     }
-//     if (!hideFirstCard)
-//     //     cout << "   总分值" << GetTotalScore(gamers[num], numcards[num]);
-//     // cout << endl;
-//         placeStatue(1,100,100);
-//     if (GetTotalScore(gamers[num], numcards[num]) > 21)
-//         // cout << endl << name[num] << "引爆(超过21点啦 ！ 结束啦)!" << endl;
-//         placeStatue(1,100,100);
-// }
 
 //place是对于玩家/庄家，牌所在的顺序
 int Widget::newshowStatus(int gamer,bool up){
@@ -403,6 +325,7 @@ void Widget::gameContinue(){
     sendcard--;
     gamers[1][numcards[1]++] = FirstCard();
     newshowStatus(1,true);
+    emit playmusic(-1,3);
 }
 
 void Widget::gameOver(){
@@ -425,8 +348,7 @@ void Widget::gameOver(){
         for (i = 1; i <= numgamer; i++)
         {	//依次查看每位玩家
             if (GetTotalScore(gamers[i], numcards[i]) <= 21)
-                // cout << name[i] << ",恭喜你，庄家引爆，而你没有超过21点，你赢了！" << endl;//玩家没有引爆
-                placeStatue(1,100,100);
+                emit playmusic(-1,5);
             else {
                 // cout << name[i] << ",唉,可惜超过21点了，打了平局！" << endl;//玩家引爆
                 placeStatue(1,100,100);
@@ -435,25 +357,25 @@ void Widget::gameOver(){
     }
     else
     {//庄家没有引爆,依次查看每位玩家
-        // for (i = 1; i <= numgamer; i++)
-        // {//总分比庄家大
-        //     if (GetTotalScore(gamers[i], numcards[i]) <= 21 && GetTotalScore(gamers[i], numcards[i]) > GetTotalScore(gamers[0], numcards[0]))
-        //     {//玩家未引爆，且总分比庄家大，玩家赢
-        //         qDebug() <<",恭喜你，你最接近21点，你赢了!" ;
-        //     }
-        //     else if (GetTotalScore(gamers[i], numcards[i]) == GetTotalScore(gamers[0], numcards[0]))
-        //     {//玩家总分与庄家相等，平局
-        //         qDebug() << ",唉，可惜了你与庄家总分相同，打了平局!" ;
-        //     }
-        //     else if (GetTotalScore(gamers[i], numcards[i]) < GetTotalScore(gamers[0], numcards[0]))
-        //     {//玩家引爆或总分比庄家小，玩家输
-        //         qDebug() << ",对不起，你输了!（庄家更接近21点）" ;
-        //     }
-        //     else if (GetTotalScore(gamers[i], numcards[i]) > 21)
-        //     {
-        //         qDebug() << ",对不起，你输了!（超过21点）" ;
-        //     }
-        // }
+        for (i = 1; i <= numgamer; i++)
+        {//总分比庄家大
+            if (GetTotalScore(gamers[i], numcards[i]) <= 21 && GetTotalScore(gamers[i], numcards[i]) > GetTotalScore(gamers[0], numcards[0]))
+            {//玩家未引爆，且总分比庄家大，玩家赢
+                emit playmusic(-1,5);
+            }
+            else if (GetTotalScore(gamers[i], numcards[i]) == GetTotalScore(gamers[0], numcards[0]))
+            {//玩家总分与庄家相等，平局
+                // qDebug() << ",唉，可惜了你与庄家总分相同，打了平局!" ;
+            }
+            else if (GetTotalScore(gamers[i], numcards[i]) < GetTotalScore(gamers[0], numcards[0]))
+            {//玩家引爆或总分比庄家小，玩家输
+                emit playmusic(-1,2);
+            }
+            else if (GetTotalScore(gamers[i], numcards[i]) > 21)
+            {
+                emit playmusic(-1,2);
+            }
+        }
     }
 }
 

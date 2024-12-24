@@ -82,7 +82,6 @@ private:
 
     int GetTotalScore(Card gamer[21], int n);	//返回第一手牌（第一次发牌）的总分值
 
-    void ShowStatus(int num, bool hideFirstCard = false);
 
     //这个是新的
     int newshowStatus(int gamer,bool up);
@@ -94,6 +93,9 @@ private:
 
     int mode = 0;
     int sendcard = 0;
+    QMediaPlayer *player =new QMediaPlayer;
+
+
 
 
 
