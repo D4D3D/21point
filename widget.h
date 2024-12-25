@@ -13,7 +13,6 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QGraphicsProxyWidget>
-
 #include <QUrl>
 #include <QMediaPlayer>
 #include <QAudioOutput>
@@ -50,29 +49,19 @@ public:
     //函数声明
     void Point21();	//无参构造函数
     void Game();
-
     bool onEKeypressed();
     void gameContinue();
     void gameOver();
-
     void playMedie(int time,int num);
-
     void checkCard();
     void restartGame();
-
     void initgamescene();
-
     void initmemuscene();
-
     void initsettlescene();
     // void GameSwitch();
-
     void switchtoMemu();
-
     void switchtoSettlement();
-
     void placenote(int num);
-
     void gameRestart();
 
 
@@ -86,11 +75,7 @@ private:
     QGraphicsScene mScene;
     QGraphicsScene memu;
     QGraphicsScene settlement;
-
-
-
     QGraphicsPixmapItem mCard;
-
 
     Card PK[52];//54张牌减去大小王
     int startPosition;//发牌初始位
@@ -102,27 +87,21 @@ private:
     // char name[8][max_length];	//庄家及玩家姓名
     int numgamer;//玩家数
 
-
     void Shuffle();	//洗牌函数
 
     int GetTotalScore(Card gamer[21], int n);	//返回第一手牌（第一次发牌）的总分值
 
     int cardAllow = 0 ;//检测玩家牌数是否超过5
 
-
     //这个是新的
     int newshowStatus(int gamer,bool up);
 
     int keyPressed;
-
     int hostcard =0;
     int playercard = 0;
-
     int mode = 0;
     int sendcard = 0;
     QMediaPlayer *player =new QMediaPlayer;
-
-
 
 
 

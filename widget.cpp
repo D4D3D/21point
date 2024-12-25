@@ -14,8 +14,6 @@ Widget::Widget(QWidget *parent)
     connect(this,&Widget::playmusic,this,&Widget::playMedie);
     connect(this,&Widget::cardLimit,this,&Widget::checkCard);
     connect(this,&Widget::keyBoardpressR,this,&Widget::gameRestart);
-    // connect(this,&Widget::,this,&Widget::);
-    // connect(this,&Widget::,this,&Widget::);
 
 
     QSize msize  = QSize(900,400);
@@ -23,14 +21,11 @@ Widget::Widget(QWidget *parent)
 
     mGameView.setSceneRect(QRect(0,0,900,400));
 
-
     QMediaPlayer *player = new QMediaPlayer;
-
 
     mGameView.setParent(this);
 
     initmemuscene();
-
 
 }
 
@@ -40,7 +35,6 @@ void Widget::gameRestart(){
     playercard =0;
     mode =0;
     sendcard = 0;
-
     initgamescene();
 }
 
@@ -49,11 +43,9 @@ void Widget::initgamescene(){
     mScene.setSceneRect(QRect(0,0,900,400));
     QGraphicsPixmapItem *mBackground = new QGraphicsPixmapItem;
     mBackground->setPixmap(QPixmap(":/image/D:/desktop/img/thedesktop.png"));
-
     mScene.addItem(mBackground);
     mGameView.setScene(&mScene);
     mGameView.show();
-
     Point21();
     Game();
 }
@@ -122,7 +114,6 @@ void Widget::Point21()
 {
     int nowPos = 0;	//当前扑克牌位置
 
-
     char* str;
 
     for (int shapePos = 0; shapePos < 4; shapePos++)	//花色
@@ -135,7 +126,6 @@ void Widget::Point21()
         }
     }
     str = new char[1];
-
 
 
     numgamer = 1;
@@ -172,22 +162,23 @@ void Widget::checkCard(){
 void Widget::playMedie(int time, int num){
 
     if(num == 1){
-        // player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/gaming.wav"));
+         player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/gaming.wav"));
     }
     if(num == 2){
         player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/lose.mp3"));
     }
     if(num == 3){
-        // player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/sendcard.mp3"));
+        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/sendcard.mp3"));
     }
     if(num == 4){
-        // player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/start.wav"));
+         player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/start.wav"));
     }
     if(num == 5){
         player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/win.mp3"));
     }
 
 }
+
 
 void Widget::keyPressEvent(QKeyEvent* event)
 {
@@ -204,7 +195,6 @@ void Widget::keyPressEvent(QKeyEvent* event)
     if( keyPressed == Qt::Key_R){
         emit keyBoardpressR(keyPressed);
     }
-
 }
 
 
@@ -385,7 +375,6 @@ void Widget::Game()
     }
 }
 
-
 void Widget::gameContinue(){
     if(cardAllow==0){
     sendcard--;
@@ -405,7 +394,7 @@ void Widget::gameOver(){
     newshowStatus(0,true);
 
     //庄家总分小于等于16，必须再拿牌
-    if (GetTotalScore(gamers[0], numcards[0]) <= 16)
+    if (GetTotalScore(gamers[0], numcards[0]) <= 16 && playercard>2)
     {
         QThread::msleep(50);
         gamers[0][numcards[0]++] = FirstCard();	//为庄家发1张牌
