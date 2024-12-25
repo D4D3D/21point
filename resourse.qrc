@@ -13,5 +13,10 @@
         <file>D:/desktop/img/medie/start.wav</file>
         <file>D:/desktop/img/medie/win.mp3</file>
         <file>D:/desktop/img/medie/sendcard.mp3</file>
+        <file>D:/desktop/img/startBackground.png</file>
+        <file>D:/desktop/img/lose.png</file>
+        <file>D:/desktop/img/Deadlock.png</file>
+        <file>D:/desktop/img/win.png</file>
+        <file>D:/desktop/img/rule.png</file>
     </qresource>
 </RCC>

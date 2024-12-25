@@ -90,6 +90,7 @@ C:/Users/xiao/Documents/21point/build/Desktop_Qt_5_15_2_MinGW_64_bit-Debug/untit
   D:/QTfile/5.15.2/mingw81_64/include/QtGui/qfont.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtGui/qfontinfo.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtGui/qfontmetrics.h \
+  D:/QTfile/5.15.2/mingw81_64/include/QtGui/qicon.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtGui/qimage.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtGui/qkeysequence.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtGui/qmatrix.h \
@@ -131,14 +132,21 @@ C:/Users/xiao/Documents/21point/build/Desktop_Qt_5_15_2_MinGW_64_bit-Debug/untit
   D:/QTfile/5.15.2/mingw81_64/include/QtNetwork/qtnetwork-config.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtNetwork/qtnetworkglobal.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/QGraphicsPixmapItem \
+  D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/QGraphicsProxyWidget \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/QGraphicsScene \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/QGraphicsView \
+  D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/QPushButton \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/QWidget \
+  D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qabstractbutton.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qabstractscrollarea.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qframe.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qgraphicsitem.h \
+  D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qgraphicslayoutitem.h \
+  D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qgraphicsproxywidget.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qgraphicsscene.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qgraphicsview.h \
+  D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qgraphicswidget.h \
+  D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qpushbutton.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qscrollarea.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qsizepolicy.h \
   D:/QTfile/5.15.2/mingw81_64/include/QtWidgets/qtwidgets-config.h \

@@ -11,8 +11,8 @@
 #include <QThread>
 #include "card.h"
 #include <QDebug>
-
-
+#include <QPushButton>
+#include <QGraphicsProxyWidget>
 
 #include <QUrl>
 #include <QMediaPlayer>
@@ -60,15 +60,37 @@ public:
     void checkCard();
     void restartGame();
 
+    void initgamescene();
+
+    void initmemuscene();
+
+    void initsettlescene();
+    // void GameSwitch();
+
+    void switchtoMemu();
+
+    void switchtoSettlement();
+
+    void placenote(int num);
+
+    void gameRestart();
+
+
+
+
     //私有变量
 private:
     Ui::Widget *ui;
 
     QGraphicsView mGameView;
     QGraphicsScene mScene;
+    QGraphicsScene memu;
+    QGraphicsScene settlement;
+
+
 
     QGraphicsPixmapItem mCard;
-    QGraphicsPixmapItem mBackground;
+
 
     Card PK[52];//54张牌减去大小王
     int startPosition;//发牌初始位
@@ -119,6 +141,13 @@ signals:
     void playmusic(int time,int num);
 
     void cardLimit(int num);
+
+    void theEnd();
+
+
+
+
+
 
 
 

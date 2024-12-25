@@ -13,27 +13,105 @@ Widget::Widget(QWidget *parent)
     connect(this,&Widget::keyBoardpressQ,this,&Widget::gameOver);
     connect(this,&Widget::playmusic,this,&Widget::playMedie);
     connect(this,&Widget::cardLimit,this,&Widget::checkCard);
+    connect(this,&Widget::keyBoardpressR,this,&Widget::gameRestart);
+    // connect(this,&Widget::,this,&Widget::);
+    // connect(this,&Widget::,this,&Widget::);
+
 
     QSize msize  = QSize(900,400);
     this->setFixedSize(msize);
 
     mGameView.setSceneRect(QRect(0,0,900,400));
-    mScene.setSceneRect(QRect(0,0,900,400));
+
 
     QMediaPlayer *player = new QMediaPlayer;
 
-    mBackground.setPixmap(QPixmap(":/image/D:/desktop/img/thedesktop.png"));
-    mScene.addItem(&mBackground);
 
-    mGameView.setScene(&mScene);
     mGameView.setParent(this);
-    mGameView.show();
-    Point21();
-    Game();
 
+    initmemuscene();
 
 
 }
+
+
+void Widget::gameRestart(){
+    hostcard =0;
+    playercard =0;
+    mode =0;
+    sendcard = 0;
+
+    initgamescene();
+}
+
+
+void Widget::initgamescene(){
+    mScene.setSceneRect(QRect(0,0,900,400));
+    QGraphicsPixmapItem *mBackground = new QGraphicsPixmapItem;
+    mBackground->setPixmap(QPixmap(":/image/D:/desktop/img/thedesktop.png"));
+
+    mScene.addItem(mBackground);
+    mGameView.setScene(&mScene);
+    mGameView.show();
+
+    Point21();
+    Game();
+}
+
+void Widget::initmemuscene(){
+    memu.setSceneRect(QRect(0,0,900,400));
+    QGraphicsPixmapItem *mBackground = new QGraphicsPixmapItem;
+    mBackground->setPixmap(QPixmap(":/image/D:/desktop/img/startBackground.png"));
+    memu.addItem(mBackground);
+    QPushButton *button = new QPushButton("开始游戏");
+    QGraphicsProxyWidget *proxy = memu.addWidget(button);
+    proxy->setPos(420,180);
+    mGameView.setScene(&memu);
+    connect(button,&QPushButton::clicked,this,&Widget::initgamescene);
+
+}
+
+// 1是win 2是lose  3是deadlock
+void Widget::placenote(int num){
+    QGraphicsPixmapItem * note = new QGraphicsPixmapItem;
+    QPixmap* win = new QPixmap;
+    QPixmap* lose = new QPixmap;
+    QPixmap* deadlock = new QPixmap;
+    win->load(":/image/D:/desktop/img/win.png");
+    lose->load(":/image/D:/desktop/img/lose.png");
+    deadlock->load(":/image/D:/desktop/img/Deadlock.png");
+    if(num == 1){
+        note->setPixmap(*win);
+        note->setPos(400,100);
+    }
+    else if(num == 2){
+        note->setPixmap(*lose);
+        note->setPos(400,100);
+    }
+    else if(num == 3){
+        note->setPixmap(*deadlock);
+        note->setPos(400,100);
+    }
+    else if(num == 4){
+        QPixmap* rule = new QPixmap;
+        rule->load(":/image/D:/desktop/img/rule.png");
+        note->setPixmap(*rule);
+        note->setPos(-30,-50);
+
+    }
+    mScene.addItem(note);
+
+}
+
+void Widget::initsettlescene(){
+    settlement.setSceneRect(QRect(0,0,900,400));
+
+
+    mGameView.setScene(&settlement);
+
+
+}
+
 
 Card Widget::FirstCard()
 {
@@ -58,35 +136,18 @@ void Widget::Point21()
     }
     str = new char[1];
 
-    //人数输入位置 目前设置为1
+
 
     numgamer = 1;
 
-
-    // while (numgamer < 1 || numgamer>7) //限制人数在1~7之间
-    // {
-    //     cout << endl << "玩家人数限定在1~7个,请重新输入人数：";
-    //     cin >> str;
-    //     numgamer = atoi(str);
-    // }
 
     startPosition = 0;	//发牌位置
     int i = 0;	//临时变量
     //庄家numcards[0]及玩家numcards[1~7]手中的扑克牌张数
     for (i = 0; i <= numgamer; i++) numcards[i] = 0;
 
-    // strcpy_s(name[0], "host");
 
 
-
-    // for (i = 1; i <= numgamer; i++)   //玩家姓名
-    // {
-    //     cout << "输入第" << i << "个玩家的姓名:";
-    //     cin >> name[i];
-    // }
-
-    // strcpy_s(name[1], "player");
-    // cout << "游戏开始" << endl << endl;
 }
 
 
@@ -155,7 +216,6 @@ void Widget::placeCard(int num,color s,int x,int y)
     cardK->setPixmap(load_card(num,s));
     cardK->setPos(x,y);
     mScene.addItem(cardK);
-
 }
 
 void Widget::placeStatue(int num,int x,int y){
@@ -205,12 +265,10 @@ QPixmap load_card(int num,color s)
 }
 
 int posCard(int x) {
-    if (x == 1) {
-        return (923 * 12 / 13);
-    }
-    else {
-        return ((923 / 13) * (x - 1));
-    }
+
+
+    return ((923 / 13) * (x - 2));
+
 
 }
 
@@ -264,10 +322,10 @@ int Widget::newshowStatus(int gamer,bool up){
             else if (gamers[0][hostcard].shape == hearts) s = heart;
             else if (gamers[0][hostcard].shape == spades) s = spade;
 
-            if (gamers[0][hostcard].num == A) cardnum = 11;	//A表示A
-            else if (gamers[0][hostcard].num == J) cardnum = 12;
-            else if (gamers[0][hostcard].num == Q) cardnum = 13;
-            else if (gamers[0][hostcard].num == K) cardnum = 14;
+            if (gamers[0][hostcard].num == A) cardnum = 14;	//A表示A
+            else if (gamers[0][hostcard].num == J) cardnum = 11;
+            else if (gamers[0][hostcard].num == Q) cardnum = 12;
+            else if (gamers[0][hostcard].num == K) cardnum = 13;
             else cardnum =  (int)gamers[0][hostcard].num;
 
             placeCard(cardnum,s,(286+(128*hostcard)),10);
@@ -278,6 +336,7 @@ int Widget::newshowStatus(int gamer,bool up){
         }
         else{
             placeCard(-1,other,286+(128*hostcard),10);
+            hostcard++;
             return 0;
         }
     }
@@ -288,10 +347,10 @@ int Widget::newshowStatus(int gamer,bool up){
         else if (gamers[gamer][playercard].shape == hearts) s = heart;
         else if (gamers[gamer][playercard].shape == spades) s = spade;
 
-        if (gamers[gamer][playercard].num == A) cardnum = 11;	//A表示A
-        else if (gamers[gamer][playercard].num == J) cardnum = 12;
-        else if (gamers[gamer][playercard].num == Q) cardnum = 13;
-        else if (gamers[gamer][playercard].num == K) cardnum = 14;
+        if (gamers[gamer][playercard].num == A) cardnum = 14;	//A表示A
+        else if (gamers[gamer][playercard].num == J) cardnum = 11;
+        else if (gamers[gamer][playercard].num == Q) cardnum = 12;
+        else if (gamers[gamer][playercard].num == K) cardnum = 13;
         else cardnum =  (int)gamers[gamer][playercard].num;
 
         placeCard(cardnum,s,(158+(128*(playercard))),286);
@@ -309,12 +368,13 @@ void Widget::Game()
     Shuffle();	//洗牌
     int i, j;
     //为庄家发两张牌
+    placenote(4);
     for (i = 0; i < 2; i++){
         gamers[0][numcards[0]++] = FirstCard();
 
     }
     newshowStatus(0,false);
-    newshowStatus(0,false);
+    newshowStatus(0,true);
     //向各玩家发牌并显示
     for (i = 1; i <= numgamer; i++)
     {
@@ -358,10 +418,11 @@ void Widget::gameOver(){
         for (i = 1; i <= numgamer; i++)
         {	//依次查看每位玩家
             if (GetTotalScore(gamers[i], numcards[i]) <= 21)
+
                 emit playmusic(-1,5);
             else {
                 // cout << name[i] << ",唉,可惜超过21点了，打了平局！" << endl;//玩家引爆
-                placeStatue(1,100,100);
+                placenote(3);
             }
         }
     }
@@ -371,18 +432,22 @@ void Widget::gameOver(){
         {//总分比庄家大
             if (GetTotalScore(gamers[i], numcards[i]) <= 21 && GetTotalScore(gamers[i], numcards[i]) > GetTotalScore(gamers[0], numcards[0]))
             {//玩家未引爆，且总分比庄家大，玩家赢
+                placenote(1);
                 emit playmusic(-1,5);
             }
             else if (GetTotalScore(gamers[i], numcards[i]) == GetTotalScore(gamers[0], numcards[0]))
             {//玩家总分与庄家相等，平局
                 // qDebug() << ",唉，可惜了你与庄家总分相同，打了平局!" ;
+                placenote(3);
             }
             else if (GetTotalScore(gamers[i], numcards[i]) < GetTotalScore(gamers[0], numcards[0]))
             {//玩家引爆或总分比庄家小，玩家输
+                placenote(2);
                 emit playmusic(-1,2);
             }
             else if (GetTotalScore(gamers[i], numcards[i]) > 21)
             {
+                placenote(2);
                 emit playmusic(-1,2);
             }
         }
