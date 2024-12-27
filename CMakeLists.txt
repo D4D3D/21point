@@ -42,6 +42,7 @@ else()
             ${PROJECT_SOURCES}
             resourse.qrc
             card.h
+            game.h
 
         )
     endif()

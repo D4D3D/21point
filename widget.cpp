@@ -57,7 +57,7 @@ void Widget::initmemuscene(){
     memu.addItem(mBackground);
     QPushButton *button = new QPushButton("开始游戏");
     QGraphicsProxyWidget *proxy = memu.addWidget(button);
-    proxy->setPos(420,180);
+    proxy->setPos(400,180);
     mGameView.setScene(&memu);
     connect(button,&QPushButton::clicked,this,&Widget::initgamescene);
 
@@ -66,29 +66,34 @@ void Widget::initmemuscene(){
 // 1是win 2是lose  3是deadlock
 void Widget::placenote(int num){
     QGraphicsPixmapItem * note = new QGraphicsPixmapItem;
-    QPixmap* win = new QPixmap;
-    QPixmap* lose = new QPixmap;
-    QPixmap* deadlock = new QPixmap;
-    win->load(":/image/D:/desktop/img/win.png");
-    lose->load(":/image/D:/desktop/img/lose.png");
-    deadlock->load(":/image/D:/desktop/img/Deadlock.png");
-    if(num == 1){
-        note->setPixmap(*win);
+    QPixmap win;
+    QPixmap lose;
+    QPixmap deadlock;
+    win.load(":/image/D:/desktop/img/win.png");
+    lose.load(":/image/D:/desktop/img/lose.png");
+    deadlock.load(":/image/D:/desktop/img/Deadlock.png");
+    switch(num){
+    case 1:
+        note->setPixmap(win);
         note->setPos(400,100);
-    }
-    else if(num == 2){
-        note->setPixmap(*lose);
+        break;
+
+    case 2:
+        note->setPixmap(lose);
         note->setPos(400,100);
-    }
-    else if(num == 3){
-        note->setPixmap(*deadlock);
+        break;
+
+    case 3:
+        note->setPixmap(deadlock);
         note->setPos(400,100);
-    }
-    else if(num == 4){
+        break;
+
+    case 4:
         QPixmap* rule = new QPixmap;
         rule->load(":/image/D:/desktop/img/rule.png");
         note->setPixmap(*rule);
         note->setPos(-30,-50);
+        break;
 
     }
     mScene.addItem(note);
@@ -148,10 +153,6 @@ Widget::~Widget()
 
 
 
-void Widget::CardMove(){
-    mCard.moveBy(5,5);
-}
-
 void Widget::checkCard(){
 
     if(playercard>4){
@@ -161,21 +162,28 @@ void Widget::checkCard(){
 
 void Widget::playMedie(int time, int num){
 
-    if(num == 1){
-         player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/gaming.wav"));
+    switch(num){
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
     }
-    if(num == 2){
-        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/lose.mp3"));
-    }
-    if(num == 3){
-        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/sendcard.mp3"));
-    }
-    if(num == 4){
-         player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/start.wav"));
-    }
-    if(num == 5){
-        player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/win.mp3"));
-    }
+
+// player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/gaming.wav"));
+
+// player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/lose.mp3"));
+
+// player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/sendcard.mp3"));
+
+// player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/start.wav"));
+
+// player->setMedia(QUrl::fromLocalFile("/image/D:/desktop/img/medie/win.mp3"));
 
 }
 
@@ -203,55 +211,44 @@ void Widget::keyPressEvent(QKeyEvent* event)
 void Widget::placeCard(int num,color s,int x,int y)
 {
     QGraphicsPixmapItem* cardK = new QGraphicsPixmapItem;
+    // std::unique_ptr<QGraphicsPixmapItem> cardK = std::make_unique<QGraphicsPixmapItem>();
     cardK->setPixmap(load_card(num,s));
     cardK->setPos(x,y);
     mScene.addItem(cardK);
 }
 
-void Widget::placeStatue(int num,int x,int y){
-    QGraphicsPixmapItem* statue = new QGraphicsPixmapItem;
-    QPixmap* image = new QPixmap;
-    if(num ==1){
-        // image->load(":/image/D:/desktop/img/testimage.png");
-    }
-    statue->setPixmap(*image);
-    statue->setPos(x,y);
-    mScene.addItem(statue);
 
-}
-
-//返回一个QPixmap的指针
+//返回一个QPixmap的对象 num:牌号 s 牌型
 QPixmap load_card(int num,color s)
 {
-    QPixmap* allCards = new QPixmap;
-    QPixmap* backCards = new QPixmap;
-    QPixmap* cardK = new QPixmap;
-    allCards->load(":/image/D:/desktop/img/cards.png");
-    backCards->load(":/image/D:/desktop/img/Enhancers.png");
-    if(num == -1&&s==other){
-        *cardK = backCards->copy(4,4 ,71,95);
-    }
+    //图片作为临时载体，不需要动态分配内存
+    QPixmap allCards ;
+    QPixmap backCards ;
+    QPixmap cardK  ;
+    allCards.load(":/image/D:/desktop/img/cards.png");
+    backCards.load(":/image/D:/desktop/img/Enhancers.png");
 
-    if (s == heart)
+        switch(s)
     {
-        *cardK = allCards->copy(posCard(num), (95*0), 71, 95);
-
+        case other:
+            if(num == -1)cardK = backCards.copy(4,4 ,71,95);
+            break;
+        case heart:
+            cardK = allCards.copy(posCard(num), (95*0), 71, 95);
+            break;
+        case club:
+            cardK = allCards.copy(posCard(num), (95*1), 71, 95);
+            break;
+        case diamond:
+            cardK = allCards.copy(posCard(num), (95*2), 71, 95);
+            break;
+        case spade:
+            cardK = allCards.copy(posCard(num), (95*3), 71, 95);
+            break;
+        default:
+            qDebug() << "未实现卡牌";
     }
-    else if (s == club)
-    {
-        *cardK = allCards->copy(posCard(num), (95*1), 71, 95);
-    }
-    else if (s == diamond)
-    {
-        *cardK = allCards->copy(posCard(num), (95*2), 71, 95);
-    }
-    else if (s == spade)
-    {
-        *cardK = allCards->copy(posCard(num), (95*3), 71, 95);
-    }
-    return *(cardK);
-
-
+    return cardK;
 }
 
 int posCard(int x) {

@@ -17,6 +17,7 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 
+// #include <memory>
 
 #define max_length 20;
 
@@ -34,6 +35,8 @@ class Widget;
 }
 QT_END_NAMESPACE
 
+
+
 class Widget : public QWidget
 {
     Q_OBJECT
@@ -46,19 +49,22 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void placeCard(int,color,int,int);
     void placeStatue(int num,int x,int y);
-    //函数声明
-    void Point21();	//无参构造函数
+    void Point21();
     void Game();
     bool onEKeypressed();
     void gameContinue();
     void gameOver();
     void playMedie(int time,int num);
     void checkCard();
+
+    //将需要初始化的变量初始化
     void restartGame();
+
+
     void initgamescene();
     void initmemuscene();
     void initsettlescene();
-    // void GameSwitch();
+
     void switchtoMemu();
     void switchtoSettlement();
     void placenote(int num);
@@ -122,13 +128,6 @@ signals:
     void cardLimit(int num);
 
     void theEnd();
-
-
-
-
-
-
-
 
 
 
