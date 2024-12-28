@@ -331,6 +331,8 @@ void Widget::gameContinue(){
 void Widget::gameOver(){
 
     int i;
+    int score0;
+    int score1;
     hostcard = 0;
     newshowStatus(0,true);	//显示庄家的前两张牌
     newshowStatus(0,true);
@@ -343,45 +345,37 @@ void Widget::gameOver(){
         newshowStatus(0,true);
         emit checkCard();
     }
+    score0 = Widget::GetTotalScore(gamers[0], numcards[0]);
+    score1 = Widget::GetTotalScore(gamers[1], numcards[0]);
 
-    if (Widget::GetTotalScore(gamers[0], numcards[0]) > 21)
+    if (score0 > 21)// 庄家爆牌
     {
-        for (i = 1; i <= numgamer; i++)
-        {	//依次查看每位玩家
-            if (Widget::GetTotalScore(gamers[i], numcards[i]) <= 21)
+        if (score1 <= 21)
 
-                emit playmusic(-1,5);
-            else {
-                // cout << name[i] << ",唉,可惜超过21点了，打了平局！" << endl;//玩家引爆
-                placenote(3);
-            }
+            emit playmusic(-1,5);
+        else {
+            placenote(3);
         }
     }
     else
-    {//庄家没有引爆,依次查看每位玩家
-        for (i = 1; i <= numgamer; i++)
-        {//总分比庄家大
-            if (Widget::GetTotalScore(gamers[i], numcards[i]) <= 21 && Widget::GetTotalScore(gamers[i], numcards[i]) > Widget::GetTotalScore(gamers[0], numcards[0]))
-            {//玩家未引爆，且总分比庄家大，玩家赢
-                placenote(1);
-                emit playmusic(-1,5);
-            }
-            else if (Widget::GetTotalScore(gamers[i], numcards[i]) == Widget::GetTotalScore(gamers[0], numcards[0]))
-            {//玩家总分与庄家相等，平局
-                // qDebug() << ",唉，可惜了你与庄家总分相同，打了平局!" ;
-                placenote(3);
-            }
-            else if (Widget::GetTotalScore(gamers[i], numcards[i]) < Widget::GetTotalScore(gamers[0], numcards[0]))
-            {//玩家引爆或总分比庄家小，玩家输
-                placenote(2);
-                emit playmusic(-1,2);
-            }
-            else if (Widget::GetTotalScore(gamers[i], numcards[i]) > 21)
-            {
-                placenote(2);
-                emit playmusic(-1,2);
-            }
+    {
+        //总分比庄家大
+        if (score1 <= 21 && score1 > score0)
+        {//玩家未引爆，且总分比庄家大，玩家赢
+            placenote(1);
+            emit playmusic(-1,5);
         }
+        else if (score1 == score0)
+        {//玩家总分与庄家相等，平局
+            // qDebug() << ",唉，可惜了你与庄家总分相同，打了平局!" ;
+            placenote(3);
+        }
+        else if (score1 < score0||score1 > 21)
+        {//玩家引爆或总分比庄家小，玩家输
+            placenote(2);
+            emit playmusic(-1,2);
+        }
+
     }
 }
 

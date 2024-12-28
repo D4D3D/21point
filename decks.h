@@ -17,9 +17,5 @@ public:
 private:
     Card PK[52];//54张牌减去大小王
     int startPosition;//发牌初始位
-
-
 };
-
-
 #endif // DECKS_H
