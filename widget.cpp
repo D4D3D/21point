@@ -34,6 +34,7 @@ void Widget::gameRestart(){
     playercard =0;
     mode =0;
     sendcard = 0;
+    cardAllow = 0;
     initgamescene();
 }
 
@@ -49,6 +50,7 @@ void Widget::initgamescene(){
 }
 
 void Widget::initmemuscene(){
+    gameStatus = 0;
     memu.setSceneRect(QRect(0,0,900,400));
     QGraphicsPixmapItem *mBackground = new QGraphicsPixmapItem;
     mBackground->setPixmap(QPixmap(":/image/D:/desktop/img/startBackground.png"));
@@ -109,7 +111,7 @@ Widget::~Widget()
 
 void Widget::checkCard(){
 // 不在能够加牌的条件
-    if(playercard>4){
+    if(playercard > 4 || gameStatus == 2){
         cardAllow = 1;
     }
 }
@@ -293,6 +295,7 @@ int Widget::newshowStatus(int gamer,bool up){
 
 void Widget::Game()
 {
+    gameStatus = 1;
     deck.Shuffle();	//洗牌
     for (int i = 0; i <= numgamer; i++) numcards[i] = 0;
     numgamer = 1;
@@ -317,7 +320,7 @@ void Widget::Game()
 }
 
 void Widget::gameContinue(){
-
+    gameStatus = 2;
     if(cardAllow==0)
     {
     sendcard--;
@@ -330,6 +333,7 @@ void Widget::gameContinue(){
 
 void Widget::gameOver(){
 
+    gameStatus = 3;
     int i;
     int score0;
     int score1;
