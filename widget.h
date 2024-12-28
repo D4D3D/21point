@@ -9,7 +9,6 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QThread>
-#include "card.h"
 #include <QDebug>
 #include <QPushButton>
 #include <QGraphicsProxyWidget>
@@ -17,10 +16,13 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 
+#include "decks.h"
+// #include <optional>
 // #include <memory>
 
 #define max_length 20;
 
+//这里的color和card的shapetype不同，功能不同，改起来太麻烦
 enum color {
     heart = 0,
     club = 1,
@@ -49,8 +51,6 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void placeCard(int,color,int,int);
     void placeStatue(int num,int x,int y);
-    void Point21();
-    void Game();
     bool onEKeypressed();
     void gameContinue();
     void gameOver();
@@ -70,8 +70,8 @@ public:
     void placenote(int num);
     void gameRestart();
 
-
-
+    void Game();
+    int GetTotalScore(Card gamer[21], int n);
 
     //私有变量
 private:
@@ -83,8 +83,6 @@ private:
     QGraphicsScene settlement;
     QGraphicsPixmapItem mCard;
 
-    Card PK[52];//54张牌减去大小王
-    int startPosition;//发牌初始位
     Card gamers[8][21];
     //gamers[0]存放庄家的牌，gamers[1]到[7]存放玩家的牌
     //设置庄家即是机器人，一个人也能玩
@@ -93,11 +91,12 @@ private:
     // char name[8][max_length];	//庄家及玩家姓名
     int numgamer;//玩家数
 
-    void Shuffle();	//洗牌函数
 
-    int GetTotalScore(Card gamer[21], int n);	//返回第一手牌（第一次发牌）的总分值
+
+    // int GetTotalScore(Card gamer[21], int n);	//返回第一手牌（第一次发牌）的总分值
 
     int cardAllow = 0 ;//检测玩家牌数是否超过5
+    int gameStatus = 0;
 
     //这个是新的
     int newshowStatus(int gamer,bool up);
@@ -108,6 +107,10 @@ private:
     int mode = 0;
     int sendcard = 0;
     QMediaPlayer *player =new QMediaPlayer;
+
+    //实例化一个牌组类
+    Decks deck;
+
 
 
 

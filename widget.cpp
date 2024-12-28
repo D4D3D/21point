@@ -15,7 +15,6 @@ Widget::Widget(QWidget *parent)
     connect(this,&Widget::cardLimit,this,&Widget::checkCard);
     connect(this,&Widget::keyBoardpressR,this,&Widget::gameRestart);
 
-
     QSize msize  = QSize(900,400);
     this->setFixedSize(msize);
 
@@ -46,7 +45,6 @@ void Widget::initgamescene(){
     mScene.addItem(mBackground);
     mGameView.setScene(&mScene);
     mGameView.show();
-    Point21();
     Game();
 }
 
@@ -89,9 +87,9 @@ void Widget::placenote(int num){
         break;
 
     case 4:
-        QPixmap* rule = new QPixmap;
-        rule->load(":/image/D:/desktop/img/rule.png");
-        note->setPixmap(*rule);
+        QPixmap rule;
+        rule.load(":/image/D:/desktop/img/rule.png");
+        note->setPixmap(rule);
         note->setPos(-30,-50);
         break;
 
@@ -100,50 +98,6 @@ void Widget::placenote(int num){
 
 }
 
-void Widget::initsettlescene(){
-    settlement.setSceneRect(QRect(0,0,900,400));
-
-
-    mGameView.setScene(&settlement);
-
-
-}
-
-
-Card Widget::FirstCard()
-{
-    return PK[startPosition++];
-}
-
-void Widget::Point21()
-{
-    int nowPos = 0;	//当前扑克牌位置
-
-    char* str;
-
-    for (int shapePos = 0; shapePos < 4; shapePos++)	//花色
-    {
-        for (int numPos = 1; numPos <= 13; numPos++)	//面值
-        {
-            PK[nowPos].shape = (shapetype)shapePos;	//花色
-            PK[nowPos].num = (numtype)numPos;	//面值
-            nowPos++;
-        }
-    }
-    str = new char[1];
-
-
-    numgamer = 1;
-
-
-    startPosition = 0;	//发牌位置
-    int i = 0;	//临时变量
-    //庄家numcards[0]及玩家numcards[1~7]手中的扑克牌张数
-    for (i = 0; i <= numgamer; i++) numcards[i] = 0;
-
-
-
-}
 
 
 Widget::~Widget()
@@ -154,7 +108,7 @@ Widget::~Widget()
 
 
 void Widget::checkCard(){
-
+// 不在能够加牌的条件
     if(playercard>4){
         cardAllow = 1;
     }
@@ -192,17 +146,21 @@ void Widget::keyPressEvent(QKeyEvent* event)
 {
     keyPressed = event->key();
 
-    if( keyPressed == Qt::Key_E)
-    {
+    switch(keyPressed){
+    case Qt::Key_E:
         emit keyBoardpressE(keyPressed);
-    }
-    if( keyPressed == Qt::Key_Q)
-    {
+        break;
+    case Qt::Key_Q:
         emit keyBoardpressQ(keyPressed);
-    }
-    if( keyPressed == Qt::Key_R){
+        break;
+    case Qt::Key_R:
         emit keyBoardpressR(keyPressed);
+        break;
+    default:
+        qDebug()<<"未实现按键";
     }
+
+
 }
 
 
@@ -251,29 +209,12 @@ QPixmap load_card(int num,color s)
     return cardK;
 }
 
-int posCard(int x) {
-
-
+inline int posCard(int x) {
     return ((923 / 13) * (x - 2));
-
-
 }
 
 
-void Widget::Shuffle()
-{
-    srand((unsigned)time(NULL));	//通过调用时间函数初始化随机数
-    for (int nowPos = 51; nowPos > 0; nowPos--)
-    {
-        int pos = rand() % (nowPos + 1);	//产生0~nowPos之间的随机数
-
-        Card temp;		//定义一个临时变量用于交换牌
-        temp = PK[pos];
-        PK[pos] = PK[nowPos];
-        PK[nowPos] = temp;
-    }
-}
-//定义返回第一手牌的总分值 的函数
+// 定义返回第一手牌的总分值 的函数
 int Widget::GetTotalScore(Card gamer[21], int n)
 {
     int pos;
@@ -352,12 +293,15 @@ int Widget::newshowStatus(int gamer,bool up){
 
 void Widget::Game()
 {
-    Shuffle();	//洗牌
+    deck.Shuffle();	//洗牌
+    for (int i = 0; i <= numgamer; i++) numcards[i] = 0;
+    numgamer = 1;
+
     int i, j;
     //为庄家发两张牌
     placenote(4);
     for (i = 0; i < 2; i++){
-        gamers[0][numcards[0]++] = FirstCard();
+        gamers[0][numcards[0]++] = deck.FirstCard();
 
     }
     newshowStatus(0,false);
@@ -366,19 +310,20 @@ void Widget::Game()
     for (i = 1; i <= numgamer; i++)
     {
         for (j = 0; j < 2; j++){
-            gamers[i][numcards[i]++] = FirstCard();
+            gamers[i][numcards[i]++] = deck.FirstCard();
             newshowStatus(1,true);
         }
     }
 }
 
 void Widget::gameContinue(){
-    if(cardAllow==0){
+
+    if(cardAllow==0)
+    {
     sendcard--;
-    gamers[1][numcards[1]++] = FirstCard();
+    gamers[1][numcards[1]++] = deck.FirstCard();
     newshowStatus(1,true);
     emit playmusic(-1,3);
-
     }
     emit checkCard();
 }
@@ -391,19 +336,19 @@ void Widget::gameOver(){
     newshowStatus(0,true);
 
     //庄家总分小于等于16，必须再拿牌
-    if (GetTotalScore(gamers[0], numcards[0]) <= 16 && playercard>2)
+    if (Widget::GetTotalScore(gamers[0], numcards[0]) <= 16 && playercard>2)
     {
         QThread::msleep(50);
-        gamers[0][numcards[0]++] = FirstCard();	//为庄家发1张牌
+        gamers[0][numcards[0]++] = deck.FirstCard();	//为庄家发1张牌
         newshowStatus(0,true);
         emit checkCard();
     }
 
-    if (GetTotalScore(gamers[0], numcards[0]) > 21)
+    if (Widget::GetTotalScore(gamers[0], numcards[0]) > 21)
     {
         for (i = 1; i <= numgamer; i++)
         {	//依次查看每位玩家
-            if (GetTotalScore(gamers[i], numcards[i]) <= 21)
+            if (Widget::GetTotalScore(gamers[i], numcards[i]) <= 21)
 
                 emit playmusic(-1,5);
             else {
@@ -416,22 +361,22 @@ void Widget::gameOver(){
     {//庄家没有引爆,依次查看每位玩家
         for (i = 1; i <= numgamer; i++)
         {//总分比庄家大
-            if (GetTotalScore(gamers[i], numcards[i]) <= 21 && GetTotalScore(gamers[i], numcards[i]) > GetTotalScore(gamers[0], numcards[0]))
+            if (Widget::GetTotalScore(gamers[i], numcards[i]) <= 21 && Widget::GetTotalScore(gamers[i], numcards[i]) > Widget::GetTotalScore(gamers[0], numcards[0]))
             {//玩家未引爆，且总分比庄家大，玩家赢
                 placenote(1);
                 emit playmusic(-1,5);
             }
-            else if (GetTotalScore(gamers[i], numcards[i]) == GetTotalScore(gamers[0], numcards[0]))
+            else if (Widget::GetTotalScore(gamers[i], numcards[i]) == Widget::GetTotalScore(gamers[0], numcards[0]))
             {//玩家总分与庄家相等，平局
                 // qDebug() << ",唉，可惜了你与庄家总分相同，打了平局!" ;
                 placenote(3);
             }
-            else if (GetTotalScore(gamers[i], numcards[i]) < GetTotalScore(gamers[0], numcards[0]))
+            else if (Widget::GetTotalScore(gamers[i], numcards[i]) < Widget::GetTotalScore(gamers[0], numcards[0]))
             {//玩家引爆或总分比庄家小，玩家输
                 placenote(2);
                 emit playmusic(-1,2);
             }
-            else if (GetTotalScore(gamers[i], numcards[i]) > 21)
+            else if (Widget::GetTotalScore(gamers[i], numcards[i]) > 21)
             {
                 placenote(2);
                 emit playmusic(-1,2);
